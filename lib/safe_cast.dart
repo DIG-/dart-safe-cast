@@ -3,6 +3,38 @@
 /// More dartdocs go here.
 library;
 
-export 'src/safe_cast_base.dart';
+final class Cast {
+  final dynamic _value;
+  const Cast(this._value);
+  T to<T>() => as<T>(_value);
+  T? toNullable<T>() => asNullable<T>(_value);
 
-// TODO: Export any libraries intended for clients of this package.
+  @pragma('vm:prefer-inline')
+  static T as<T>(dynamic value) => value as T;
+  @pragma('vm:prefer-inline')
+  static T? asNullable<T>(dynamic value) => value is T ? value : null;
+}
+
+final class SafeCast<V> implements Cast {
+  @override
+  final dynamic _value;
+  final V ifNull;
+  const SafeCast(this._value, {required this.ifNull});
+
+  @override
+  T to<T>() {
+    assert(ifNull is T, 'ifNull(${ifNull.runtimeType}) must be instance of $T');
+    if (_value is T) {
+      return _value;
+    }
+    return ifNull as T;
+  }
+
+  @override
+  T? toNullable<T>() => Cast.asNullable<T>(_value);
+
+  @pragma('vm:prefer-inline')
+  static T as<T>(dynamic value, {required T ifNull}) => Cast.asNullable<T>(value) ?? ifNull;
+  @pragma('vm:prefer-inline')
+  static T? asNullable<T>(dynamic value) => Cast.asNullable<T>(value);
+}
