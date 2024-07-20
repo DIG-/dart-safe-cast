@@ -1,5 +1,5 @@
 name: safe_cast
-description: Dart library to safe cast
+description: Dart library to provides safe way to cast objects or dynamics
 version: 1.0.0
 repository: https://github.com/DIG-/dart-safe-cast
 issue_tracker: https://github.com/DIG-/dart-safe-cast/issues
