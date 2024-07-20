@@ -1,39 +1,31 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+DIG Dart Safe Cast
+==================
+[![Pub](https://img.shields.io/pub/v/safe_cast.svg)](https://pub.dev/packages/safe_cast)
+[![Pub Score](https://img.shields.io/pub/points/safe_cast?color=2E8B57&label=pub%20points)](https://pub.dev/packages/safe_cast/score)
+[![License](https://img.shields.io/static/v1?label=license&message=LGPL-3.0-only&color=blue)](https://opensource.org/license/lgpl-3-0)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
+- Simple syntax
+- Reduces boillerplate
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
-
+Usage
+=====
 ```dart
-const like = 'sample';
+import 'package:safe_cast/safe_cast.dart';
+ ⋮
+ Fruit? fruit = Cast.asNullable<Fruit>(maybeFruit);
+ // or, if you need a fruit
+ Fruit fruit = SafeCast.as<Fruit>(maybeFruit, ifNull: () => availableFruit());
 ```
 
-## Additional information
+How effective it is
+-------------------
+It is better for chained operations..
+```dart
+CuttedFruit? cutted = maybeFruit is Fruit ? maybeFruit.cut(fruitCutter) : null;
+// intead of
+CuttedFruit? cutted = Cast.asNullable<Fruit>(maybeFruit)?.cut(fruitCutter);
+```
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+License
+=======
+[GNU Lesser General Public License version 3 (LGPL-3.0-only)](https://opensource.org/license/lgpl-3-0)
