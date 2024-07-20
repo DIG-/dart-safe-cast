@@ -18,23 +18,28 @@ final class Cast {
 final class SafeCast<V> implements Cast {
   @override
   final dynamic _value;
-  final V ifNull;
+  final V Function() ifNull;
   const SafeCast(this._value, {required this.ifNull});
 
   @override
   T to<T>() {
-    assert(ifNull is T, 'ifNull(${ifNull.runtimeType}) must be instance of $T');
     if (_value is T) {
       return _value;
     }
-    return ifNull as T;
+    final value = ifNull();
+    assert(
+      value is T,
+      'ifNull must be instance of $T, returned ${value.runtimeType}',
+    );
+    return value as T;
   }
 
   @override
   T? toNullable<T>() => Cast.asNullable<T>(_value);
 
   @pragma('vm:prefer-inline')
-  static T as<T>(dynamic value, {required T ifNull}) => Cast.asNullable<T>(value) ?? ifNull;
+  static T as<T>(dynamic value, {required T Function() ifNull}) =>
+      Cast.asNullable<T>(value) ?? ifNull();
   @pragma('vm:prefer-inline')
   static T? asNullable<T>(dynamic value) => Cast.asNullable<T>(value);
 }
