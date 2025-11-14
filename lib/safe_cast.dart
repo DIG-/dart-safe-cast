@@ -1,9 +1,6 @@
 /// Type cast library with friendly syntax
 library;
 
-//const _hashCode = 'SafeCast'.hashCode;
-const _hashCode = 1017486719;
-
 /// Do type cast from [Object?] to any class
 final class Cast {
   final Object? _value;
@@ -20,7 +17,7 @@ final class Cast {
 
   /// Generate hash code for [SafeCast] instance
   @override
-  int get hashCode => (_hashCode * 31) + (_value?.hashCode ?? 0);
+  int get hashCode => Object.hash(super.hashCode, _value);
 
   /// Compare two [Cast] instance values
   @override
@@ -28,9 +25,7 @@ final class Cast {
 
   /// Print content value
   @override
-  String toString() => _value == null
-      ? 'Cast(value=null)'
-      : 'Cast(value=$_value#${_value.runtimeType})';
+  String toString() => 'Cast(value=$_value)';
 
   /// Force type cast to [T], will throw if [null] or is not [T]
   @pragma('vm:prefer-inline')
@@ -73,7 +68,7 @@ final class SafeCast<V> implements Cast {
 
   /// Generate hash code for [SafeCast] instance
   @override
-  int get hashCode => (_hashCode * 31) + (_value?.hashCode ?? 0);
+  int get hashCode => Object.hash(super.hashCode, _value, ifNull);
 
   /// Compare two [Cast] instance values or two [SafeCast] values and ifNull
   @override
@@ -83,9 +78,7 @@ final class SafeCast<V> implements Cast {
 
   /// Print content value
   @override
-  String toString() => _value == null
-      ? 'SafeCast(value=null, ifNull=$ifNull)'
-      : 'SafeCast(value=$_value#${_value.runtimeType}, ifNull=$ifNull)';
+  String toString() => 'SafeCast(value=$_value, ifNull=$ifNull)';
 
   /// Type cast to [T], will return the value created by [ifNull] when the original value is [null] or is not [T]
   @pragma('vm:prefer-inline')
