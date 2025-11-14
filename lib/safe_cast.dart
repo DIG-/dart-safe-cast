@@ -1,14 +1,14 @@
-/// Type cast library with friendly syntx
+/// Type cast library with friendly syntax
 library;
 
 //const _hashCode = 'SafeCast'.hashCode;
 const _hashCode = 1017486719;
 
-/// Do type cast from [dynamic] to any class
+/// Do type cast from [Object?] to any class
 final class Cast {
-  final dynamic _value;
+  final Object? _value;
 
-  /// Construct an instance of Cast that contains the [dynamic] to be type casted
+  /// Construct an instance of Cast that contains the [Object?] to be type casted
   /// It is recommended to use the static methods
   const Cast(this._value);
 
@@ -34,20 +34,20 @@ final class Cast {
 
   /// Force type cast to [T], will throw if [null] or is not [T]
   @pragma('vm:prefer-inline')
-  static T as<T>(dynamic value) => value as T;
+  static T as<T>(Object? value) => value as T;
 
   /// Type cast to [T], will return [null] if value is [null] or is not [T]
   @pragma('vm:prefer-inline')
-  static T? asNullable<T>(dynamic value) => value is T ? value : null;
+  static T? asNullable<T>(Object? value) => value is T ? value : null;
 }
 
-/// Do type cast from [dynamic] to any class and provides fallback
+/// Do type cast from [Object?] to any class and provides fallback
 final class SafeCast<V> implements Cast {
   @override
-  final dynamic _value;
+  final Object? _value;
   final V Function() ifNull;
 
-  /// Construct an instance of SafeCast that contains the [dynamic] to be type casted, also with required fallback creator
+  /// Construct an instance of SafeCast that contains the [Object?] to be type casted, also with required fallback creator
   /// It is recommended to use the static methods
   const SafeCast(this._value, {required this.ifNull});
 
@@ -55,7 +55,7 @@ final class SafeCast<V> implements Cast {
   @override
   T to<T>() {
     if (_value is T) {
-      return _value;
+      return _value as T;
     }
     final value = ifNull();
     assert(
@@ -89,11 +89,11 @@ final class SafeCast<V> implements Cast {
 
   /// Type cast to [T], will return the value created by [ifNull] when the original value is [null] or is not [T]
   @pragma('vm:prefer-inline')
-  static T as<T>(dynamic value, {required T Function() ifNull}) =>
+  static T as<T>(Object? value, {required T Function() ifNull}) =>
       Cast.asNullable<T>(value) ?? ifNull();
 
   /// Type cast to [T], will return [null] if value is [null] or is not [T]
   /// This method is only for compatibility with Cast to fast replacement
   @pragma('vm:prefer-inline')
-  static T? asNullable<T>(dynamic value) => Cast.asNullable<T>(value);
+  static T? asNullable<T>(Object? value) => Cast.asNullable<T>(value);
 }
