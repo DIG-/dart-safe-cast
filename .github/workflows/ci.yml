@@ -2,9 +2,9 @@ name: Dart CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   analyze:
@@ -12,12 +12,18 @@ jobs:
     strategy:
       matrix:
         sdk:
-          - '3.0.0'
-          - '3.1.0'
-          - '3.2.0'
-          - '3.3.0'
-          - '3.4.0'
-          - 'latest'
+          - "3.0.0"
+          - "3.1.0"
+          - "3.2.0"
+          - "3.3.0"
+          - "3.4.0"
+          - "3.5.0"
+          - "3.6.0"
+          - "3.7.0"
+          - "3.8.0"
+          - "3.9.0"
+          - "3.10.0"
+          - "latest"
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
@@ -38,12 +44,18 @@ jobs:
     strategy:
       matrix:
         sdk:
-          - '3.0.0'
-          - '3.1.0'
-          - '3.2.0'
-          - '3.3.0'
-          - '3.4.0'
-          - 'latest'
+          - "3.0.0"
+          - "3.1.0"
+          - "3.2.0"
+          - "3.3.0"
+          - "3.4.0"
+          - "3.5.0"
+          - "3.6.0"
+          - "3.7.0"
+          - "3.8.0"
+          - "3.9.0"
+          - "3.10.0"
+          - "latest"
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@9a04e6d73cca37bd455e0608d7e5092f881fd603
@@ -55,4 +67,3 @@ jobs:
       - name: Run tests
         run: dart test --test-randomize-ordering-seed=random
         if: always() && steps.install.outcome == 'success'
-  
